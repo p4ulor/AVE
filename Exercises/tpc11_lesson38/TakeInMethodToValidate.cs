@@ -8,9 +8,8 @@ class TakeInMethodToValidate<W> : IValidation
         this.func = func;
     }
     public bool Validate(object obj) {
-        if(obj!=null){
-            return func.Invoke((W)obj);
-        }
+        if(obj is W) return func.Invoke((W)obj);
+        //throw new TypeMismatchException(); nao existe?
         return false;
     }
 }

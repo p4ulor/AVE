@@ -20,7 +20,7 @@
 - Generics
 
 ___
-
+### How to navigate and open the projects
 Each folder that has the .vscode folder should be opened as a project
 
 Open the folder and type in the explorer address bar: cmd
@@ -28,17 +28,49 @@ Open the folder and type in the explorer address bar: cmd
 In the console, write: code .
 
 Or just drag and release the folder into VSC and it will open the project
+
+Inside each folder that contains a .csproj file for the project. Run this command in console: 
+- dotnet build
+
+Which will compile(AKA build) the .dll files and other stuff which, are files of larger size and shouldn't be placed in repos.
+
 ___
 
-IDE used: VSC. It's fast, simple and very good. 
+### Create projects using:
 
-Extension used in VSC:
-Name: C# IL Viewer
+**dotnet new** *operation* **-o FolderName**
+
+Example of operations used:
+- **console** (creates project with main method)
+- **classlib** (creates project intended to just contain utility classes, no main method)
+- **xunit** (creates project intended to run tests on)
+___
+
+### IDE used: VSC. It's fast, simple and very good. 
+
+### Extensions used in VSC:
+
+- Name: **C# IL Viewer**
 Id: josephwoodward.vscodeilviewer
 Description: A C# IL Viewer for Visual Studio Code
 Version: 0.0.1
 Publisher: Joseph Woodward
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=josephwoodward.vscodeilviewer
 
-Extra program installed: ildasm.exe
+- Name: **C#**
+Id: ms-dotnettools.csharp
+Description: C# for Visual Studio Code (powered by OmniSharp).
+Version: 1.23.12
+Publisher: Microsoft
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+
+- Name: **vscode-pdf**
+Id: tomoki1207.pdf
+Description: Display pdf file in VSCode.
+Version: 1.1.0
+Publisher: tomoki1207
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf
+___
+### Extra program installed: ildasm.exe
+It's used to consult metadata and the IL code of .dll files.
 

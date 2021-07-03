@@ -7,11 +7,10 @@ public class Validator<T> {
     
    
     private IValidation validation {get; set;}
-    private string propertyNameToValidate {get; set;}
     
     private Validator<T> head {get; set;}
     private Validator<T> nextValidator {get; set;}
-    private PropertyInfo prop;
+    private PropertyInfo property;
     private Type type;
 
     public Validator () { 
@@ -26,63 +25,41 @@ public class Validator<T> {
     public Validator<T> AddValidation(string prop, object obj){
         IValidation validation = obj as IValidation;
         if (validation!=null && prop!=null && prop.Length!=0) {
-            if(nextValidator==null){ //entao isto é a inicializaçao da cabeça
-                propertyNameToValidate = prop;
-                this.validation = validation;
-                nextValidator = new Validator<T>(this, type);
-                this.prop = type.GetProperty(prop);
-                return this; //the head
-            }
-            Validator<T> getLastOnTheList = nextValidator;
-            while(getLastOnTheList.nextValidator!=null){
-               getLastOnTheList = getLastOnTheList.nextValidator;
-            }
-
-            getLastOnTheList.propertyNameToValidate = prop;
-            getLastOnTheList.validation = validation;
-            getLastOnTheList.nextValidator = new Validator<T>(getLastOnTheList.head, type);
-            getLastOnTheList.prop = type.GetProperty(prop);
-            return getLastOnTheList.head;
+            if(head==null) head=this;
+            this.validation = validation;
+            PropertyInfo propertyInfo = type.GetProperty(prop);
+            if(propertyInfo==null) throw new ValidationException();
+            this.property = propertyInfo;
+            nextValidator = new Validator<T>(head, type);
+            return nextValidator;
         }
         throw new ValidationException();
     }
    
-    public Validator<T> AddValidation<W>(string s, Func<W, bool> method) {
-        if(s==null || s.Length==0|| method==null) throw new ValidationException();
+    public Validator<T> AddValidation<W>(string prop, Func<W, bool> method) {
+        if(prop==null || prop.Length==0|| method==null) throw new ValidationException();
         IValidation validationMethod = new TakeInMethodToValidate<W>(method);
             
-        if(nextValidator==null){ //entao isto é a inicializaçao da cabeça
-            propertyNameToValidate = s;
-            this.validation = validationMethod;
-            nextValidator = new Validator<T>(this,type);
-            this.prop = type.GetProperty(s);
-            return this; //the head
-        }
-        Validator<T> getLastOnTheList = nextValidator;
-        while(getLastOnTheList.nextValidator!=null){
-            getLastOnTheList = getLastOnTheList.nextValidator;
-        }
-
-        getLastOnTheList.propertyNameToValidate = s;
-        getLastOnTheList.validation = validationMethod;
-        getLastOnTheList.nextValidator = new Validator<T>(getLastOnTheList.head, type);
-        getLastOnTheList.prop = type.GetProperty(s);
-        return getLastOnTheList.head;
-        
-        throw new ValidationException();
+        if(head==null) head=this;
+        this.validation = validationMethod;
+        PropertyInfo propertyInfo = type.GetProperty(prop);
+        if(propertyInfo==null) throw new ValidationException();
+        this.property = propertyInfo;
+        nextValidator = new Validator<T>(head, type);
+        return nextValidator;
     } 
 
     public void Validate(T o) {
         if(o!=null){
-           Validator<T> val = this;
+           Validator<T> val = head; //this approach simplifies a lot, getting the head only at the evaluation
            string s;
-            while(val.propertyNameToValidate!=null){
-                if(val.validation.Validate(val.prop.GetValue(o))){
+            while(val.property!=null){
+                if(val.validation.Validate(val.property.GetValue(o))){
                     s="Success";
                 } else {
                    s="Failed";  //throw new ValidationException();
                 }
-                Console.WriteLine(s+" for prop: "+ val.propertyNameToValidate+" for validation: "+val.validation.ToString());
+                Console.WriteLine(s+" for prop: "+ val.property.Name+" for validation: "+val.validation.ToString());
                 val=val.nextValidator;
             }   
             return;
