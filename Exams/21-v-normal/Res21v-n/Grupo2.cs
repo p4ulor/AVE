@@ -32,7 +32,7 @@ public class PropertyComparer : IComparer {
         PropertyInfo px = x.GetType().GetProperty(prop.Name);
         PropertyInfo py = y.GetType().GetProperty(prop.Name);
         if(px!=null && py!=null){
-            if(px.PropertyType!=prop.PropertyType && py.PropertyType!=prop.PropertyType){
+            if(px.PropertyType==prop.PropertyType && py.PropertyType==prop.PropertyType){
                 IComparable xc = px.GetValue(x) as IComparable;
                 IComparable yc = py.GetValue(y) as IComparable;
                 if(xc!=null && yc!=null){
@@ -60,7 +60,7 @@ public class MethodComparer : IComparer {
         MethodInfo px = x.GetType().GetMethod(method.Name);
         MethodInfo py = y.GetType().GetMethod(method.Name);
         if(px!=null && py!=null){
-            if(px.ReturnType!=method.ReturnType && py.ReturnType!=method.ReturnType){
+            if(px.ReturnType==method.ReturnType && py.ReturnType==method.ReturnType){
                 IComparable xc = px.Invoke(x, null) as IComparable;
                 IComparable yc = py.Invoke(y, null) as IComparable;
                 if(xc!=null && yc!=null){

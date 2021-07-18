@@ -17,8 +17,8 @@ This will add to the ResTests.csproj file the lines:
 ```xml
 <ItemGroup>
     <ProjectReference Include="..\Res\Res.csproj" />
-  </ItemGroup>
-  ```
+</ItemGroup>
+```
 
 Still, if in the ResTests folder you can't reference the classes in the Res folder. Try re-opening VSC. Alternative you can just add at the top:
 - using Res;
