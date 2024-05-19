@@ -1,0 +1,41 @@
+Unlike java, in order to execute the build of the source code in C#, we need to have a a configured folder
+and that folder should have a file .csproj
+
+We can generate 2 types of outputs: Class Library or Console Application
+Both generate a DLL,
+but the console app has an entry point(main() method)
+
+dotnet new //lista os varios tipos de projetos para criar, e estes ja tem API's para testes unitarios
+dotnew new xunit -o Logger.Tests
+//(entrar na pasta Logger.Tests
+cd Logger.Tests
+dotnet add reference ..\Logger\Logger.csproj
+cd .. //anda para tras na diretoria
+dotnet sln add Logger.Tests\Logger.Tests.csproj
+//sln = solution
+
+testes -> AAA(arrange, act, assert)
+             criar objs, chamar metodos, confirmar resultado
+
+dotnet run -p App\App.csproj
+	
+FOR LIB(doesnt have main method):
+run in cmd:
+dotnet new classlib
+dotnet build // Builds a project and all of its dependencies. its like a "javac" to form a component
+dotnet publish // Packs the application and its dependencies into a folder for deployment to a hosting system. (PS - this also builds the application before packing)
+
+FOR APP(contains main method):
+dotnet new console //creates the project inside the folder where u executed the command, and the project name will be the same as the folder
+dotnet new console -o App //creates program inside folder name App.cs
+dotnet run -> executes
+
+is = instanceof em java
+
+.GetType() é para instancias/objetos, resolvido em tempo de execuçao = getClass() em java
+typeof("nome de uma classe"), resolvido em tempo de compilaçao = "nome da classe".class em java
+
+
+
+
+

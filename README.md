@@ -48,7 +48,7 @@ ___
 
 ### IDE used: VSC. It's fast, simple and very good. 
 
-### Extensions used in VSC:
+### Extensions recommended for this repo using VSC:
 
 - Name: **C# IL Viewer**
 Id: josephwoodward.vscodeilviewer

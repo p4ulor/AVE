@@ -1,0 +1,35 @@
+kotlinc Point.kt //compiles
+
+javap App.class //disassembles and shows meta data(like methods)
+javap -c App.class //disassembles and shows metadata and bytecodes(machine language for the JVM)
+javap -c -v App.class //will show even more info
+https://stackoverflow.com/questions/6091920/check-content-in-class-files
+javac App.java //will not work unless Point.class exists in the directory(atleast in my case, it might even not work anyways: depends on java version)
+//if not:
+javac -classpath . App.java //will search for a file .class with metadata that includes a method named getModule(), just like we have in Point.class 
+         //or
+         -cp
+other cmds:
+cat
+dir
+
+NOTE: 
+the connection between(App.class and Point.class) is dynamic, cuz its done in execution time and the dependencies(linking) is NOT implicity written in the console)
+And because/to add to this, part of this connection is delayed. That is, only some things are loaded. 
+Example: Point.class will be used when it's necessary. 
+In order for you to compile App.java, you need Point.class, because you USE methods from it
+But if you don't ACTUALLY call or use(remove the call demo1() ) something in Point.java
+
+COMPONENT(piece of software) = IL + METADATA (like a .class)
+for java, IL = bytecodes
+for .net IL = CLR or CIL
+
+Also, java creates each components for each class
+.net creates one component for many and all types(classes) used
+
+
+Component - Reusable software unit, with:
+IR => code in intermediate representation (e.g. bytecodes, IL, other)
+Metadata => used to describe the code and for the connection between components(during compile or runtime(very used in IDE's)), its like a header file, essencial for reflection
+Ready to use => does not require static compilation.
+Indivisible => 1 module (file)
